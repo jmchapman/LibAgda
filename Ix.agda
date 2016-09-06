@@ -17,7 +17,7 @@ module INDEX {I : Set} where
 
   module MODAL {R : I -> I -> Set}(C : Cat R) where
 
-    open Cat R C
+    open Cat C
 
     BOX : (I -> Set) -> I -> Set
     BOX T i = ^ (Hom R i -:> T)

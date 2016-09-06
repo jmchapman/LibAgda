@@ -13,7 +13,7 @@ module CATSTUFF {k l}{I : Set k}(R : I -> I -> Set l) where
 
   record Cat : Set (k ⊔ l) where
     field
-      idC     : {i : I} -> Hom i i
+      idC     : {i : I} -> Hom i i 
       _>>_    : {i j k : I} -> Hom i j -> Hom j k -> Hom i k
 
   module CATLAWS (Q : forall {i j} -> Hom i j -> Hom i j -> Set l)
@@ -40,7 +40,7 @@ _<Cat-_ : forall {j k l}{I : Set k}{J : Set j}{R : I -> I -> Set l} ->
 C <Cat- f = record
   { idC = [ hom idC >  -- bizarre
   ; _>>_ = \ f g -> [ hom ([ hom f > >> [ hom g >) >  -- bizarrer
-  } where open Cat _ C
+  } where open Cat C
 
 module FUNCTORSTUFF
   {k l}{I : Set k}{R : I -> I -> Set l}

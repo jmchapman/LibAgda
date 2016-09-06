@@ -1,5 +1,6 @@
 module LibAgda.OPE {X : Set} where
 
+open import Agda.Primitive
 open import LibAgda.Comb
 open import LibAgda.Zero
 open import LibAgda.One
@@ -97,3 +98,22 @@ OPECAT = record
   { idC = [ idOPE >
   ; _>>_ = \ { [ rh > [ rh' > -> [ rh >OPE> rh' > }
   }
+
+id-coOPE : {i j : Bwd X} (h : Hom OPE i j) → [ idOPE >OPE> hom h > == h
+id-coOPE h rewrite idOPE>OPE> (hom h) = refl
+
+co-idOPE : {i j : Bwd X} (h : Hom OPE i j) → [ hom h >OPE> idOPE > == h
+co-idOPE h rewrite >OPE>idOPE (hom h) = refl
+
+assocOPE : {i j k' l' : Bwd X} (f : Hom OPE i j) (g : Hom OPE j k')
+           (h : Hom OPE k' l') →
+           [_> {R = OPE} ((hom f >OPE> hom g) >OPE> hom h)
+           ==
+           [ hom f >OPE> (hom g >OPE> hom h) >
+assocOPE f g h rewrite assoc>OPE> (hom f) (hom g) (hom h) = refl
+
+OPECATLAWS : CatLaws _==_ OPECAT
+OPECATLAWS = record {
+  id-co = id-coOPE ;
+  co-id = co-idOPE ;
+  assoc = assocOPE}
